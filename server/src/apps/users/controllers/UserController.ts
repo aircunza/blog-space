@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { CommandBus } from "../../../contexts/shared/infrastructure/CommandBus/CommandBus";
-import { CreateUserCommand } from "../../../contexts/users/domain/commands/CreateUserCommand";
+import { CreateUserCommand } from "../../../contexts/users/application/create/CreateUserCommand";
 
 export class UserController {
   constructor(private commandBus: CommandBus) {}

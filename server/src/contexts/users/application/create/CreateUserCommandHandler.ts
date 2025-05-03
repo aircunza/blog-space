@@ -1,10 +1,10 @@
 import { Command } from "../../../shared/domain/Command";
-import { CommandHandler } from "../../../shared/infrastructure/CommandBus/CommandBus";
-import { CreateUserCommand } from "../../domain/commands/CreateUserCommand";
+import { ICommandHandler } from "../../../shared/domain/ICommandHandler";
+import { CreateUserCommand } from "./CreateUserCommand";
 import { UserCreator } from "./UserCreator";
 
 export class CreateUserCommandHandler
-  implements CommandHandler<CreateUserCommand>
+  implements ICommandHandler<CreateUserCommand>
 {
   constructor(private readonly userCreator: UserCreator) {}
 
