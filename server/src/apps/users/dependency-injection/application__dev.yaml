@@ -1,0 +1,21 @@
+services:
+  Contexts.users.domain.UserRepository:
+    class: ../../../contexts/users/infrastructure/persistence/sequelize/repositories/UserRepository
+
+  Contexts.users.application.UserCreator:
+    class: ../../../contexts/users/application/create/UserCreator
+    arguments: ["@Contexts.users.domain.UserRepository"]
+
+  Contexts.users.application.CreateUserCommandHandler:
+    class: ../../../contexts/users/application/create/CreateUserCommandHandler
+    arguments: ["@Contexts.users.application.UserCreator"]
+    tags:
+      - { name: commandHandler }
+
+  Contexts.shared.infrastructure.CommandBus:
+    class: ../../../contexts/shared/infrastructure/CommandBus/CommandBus
+    arguments: ["!tagged commandHandler"]
+
+  Apps.users.controllers.UserController:
+    class: ../controllers/UserController
+    arguments: ["@Contexts.shared.infrastructure.CommandBus"]
