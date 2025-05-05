@@ -1,6 +1,7 @@
-import { Command } from "../../domain/Command";
-import { ICommandBus } from "../../domain/ICommandBus";
-import { ICommandHandler } from "../../domain/ICommandHandler";
+import { Command } from "../../domain/command/Command";
+import { ICommandBus } from "../../domain/command/ICommandBus";
+import { ICommandHandler } from "../../domain/command/ICommandHandler";
+import { CommandNotRegisteredError } from "../../domain/value-object/CommandNotRegisteredError";
 
 export class CommandBus implements ICommandBus {
   private handlers = new Map<Command, ICommandHandler<Command>>();
@@ -30,7 +31,7 @@ export class CommandBus implements ICommandBus {
   async dispatch(command: Command) {
     const handler = this.handlers.get(command.constructor);
     if (!handler) {
-      throw new Error(`No handler found for command: ${command.constructor}`);
+      throw new CommandNotRegisteredError(command);
     }
     await handler?.handle(command);
   }

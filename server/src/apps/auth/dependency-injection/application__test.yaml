@@ -1,0 +1,28 @@
+services:
+  Contexts.shared.infrastructure.security.PasswordEncryptor:
+    class: ../../../contexts/shared/infrastructure/security/BcryptPasswordEncryptor
+
+  Contexts.auth.domain.AuthRepository:
+    class: ../../../contexts/auth/infrastructure/persistence/sequelize/repositories/SequelizeAuthRepository
+
+  Contexts.auth.application.SignupUserUseCase:
+    class: ../../../contexts/auth/application/signup/SignupUserUseCase
+    arguments:
+      [
+        "@Contexts.auth.domain.AuthRepository",
+        "@Contexts.shared.infrastructure.security.PasswordEncryptor",
+      ]
+
+  Contexts.auth.application.SignupUserCommandHandler:
+    class: ../../../contexts/auth/application/signup/SignupUserCommandHandler
+    arguments: ["@Contexts.auth.application.SignupUserUseCase"]
+    tags:
+      - { name: commandHandler }
+
+  Contexts.shared.infrastructure.CommandBus:
+    class: ../../../contexts/shared/infrastructure/CommandBus/CommandBus
+    arguments: ["!tagged commandHandler"]
+
+  Apps.auth.controllers.SignupUserCtrl:
+    class: ../controllers/SignupUserCtrl
+    arguments: ["@Contexts.shared.infrastructure.CommandBus"]

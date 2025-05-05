@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 
-import { initUserModel } from "./models/UserModel";
+import { initAuthUserModel } from "../../../../auth/infrastructure/persistence/sequelize/models/AuthUserModel";
+import { initUserModel } from "../../../../users/infrastructure/persistence/sequelize/models/UserModel";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ export const sequelize = new Sequelize(
 );
 
 initUserModel(sequelize);
+initAuthUserModel(sequelize);
 
 export async function connectionDb() {
   try {

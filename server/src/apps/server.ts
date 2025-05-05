@@ -2,21 +2,19 @@ import bodyParser from "body-parser";
 import compress from "compression";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import errorhandler from "errorhandler";
 import express, { NextFunction, Request, Response } from "express";
 import Router from "express-promise-router";
 import fs from "fs";
 import helmet from "helmet";
 import * as http from "http";
-import status from "http-status";
 import { Server as SocketIOServer } from "socket.io";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yaml";
 
-import { connectionDb } from "../contexts/users/infrastructure/persistence/sequelize/PostgresqlSequelize";
+import { DomainError } from "../contexts/shared/domain/value-object/DomainError";
+import { connectionDb } from "../contexts/shared/infrastructure/persistence/sequelize/SequelizeClientPostgresql";
 import { registerRoutes as registerAuth } from "./auth/routes";
 import { configApps } from "./config";
-import { errorsList } from "./shared/utils/errorsList";
 import { setupSocket } from "./socketServer";
 import { registerRoutes as registerUsers } from "./users/routes/";
 
@@ -68,22 +66,16 @@ export class Server {
       })
     );
 
-    // Error handling middleware (this is only enabled in development)
-    if (process.env.NODE_ENV === "test") {
-      this.express.use(errorhandler());
-    }
-
     // Error handling middleware for production
     router.use(
-      (error: Error, req: Request, res: Response, next: NextFunction) => {
-        const errorFound = errorsList.find((e) => e.error === error.message);
-        if (errorFound) {
-          return res.status(errorFound.statusCode).json(errorFound.error);
-        }
-        if (process.env.NODE_ENV === "dev") {
+      (error: DomainError, req: Request, res: Response, next: NextFunction) => {
+        //const errorFound = errorsList.find((e) => e.error === error.message);
+        if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "test") {
           console.error(error);
         }
-        res.status(status.INTERNAL_SERVER_ERROR).send();
+        res
+          .status(error.statusCode ?? 500)
+          .send(error.clientMessage ?? "Internal server error");
         next();
       }
     );
@@ -127,7 +119,7 @@ export class Server {
       if (this.httpServer) {
         this.httpServer.close((error) => {
           if (error) {
-            console.log(error);
+            console.error(error);
             reject(error);
             return;
           }

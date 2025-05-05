@@ -37,6 +37,7 @@ module.exports = {
     "no-use-before-define": "error",
     "require-atomic-updates": "error",
     "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-empty-interface": "off",
     // good practices
     camelcase: "error",
     eqeqeq: "error",

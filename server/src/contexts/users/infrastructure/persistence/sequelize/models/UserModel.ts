@@ -6,8 +6,6 @@ export class UserModel extends Model {
   public email!: string;
   public password!: string;
   public role!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
 }
 
 export const initUserModel = (sequelize: Sequelize) => {
