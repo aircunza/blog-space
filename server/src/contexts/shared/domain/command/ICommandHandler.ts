@@ -2,5 +2,5 @@ import { Command } from "./Command";
 
 export interface ICommandHandler<T extends Command> {
   subscribedTo(): Command;
-  handle(command: T): Promise<void>;
+  handle(command: T): Promise<any>;
 }

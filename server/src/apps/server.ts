@@ -75,7 +75,7 @@ export class Server {
         }
         res
           .status(error.statusCode ?? 500)
-          .send(error.clientMessage ?? "Internal server error");
+          .json(error.clientMessage ?? "Internal server error");
         next();
       }
     );

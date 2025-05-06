@@ -5,6 +5,7 @@ services:
   Contexts.auth.domain.AuthRepository:
     class: ../../../contexts/auth/infrastructure/persistence/sequelize/repositories/SequelizeAuthRepository
 
+  #### Signup:
   Contexts.auth.application.SignupUserUseCase:
     class: ../../../contexts/auth/application/signup/SignupUserUseCase
     arguments:
@@ -19,10 +20,32 @@ services:
     tags:
       - { name: commandHandler }
 
-  Contexts.shared.infrastructure.CommandBus:
-    class: ../../../contexts/shared/infrastructure/CommandBus/CommandBus
-    arguments: ["!tagged commandHandler"]
-
   Apps.auth.controllers.SignupUserCtrl:
     class: ../controllers/SignupUserCtrl
     arguments: ["@Contexts.shared.infrastructure.CommandBus"]
+
+  #### Login:
+
+  Contexts.auth.application.AuthenticateUserUseCase:
+    class: ../../../contexts/auth/application/authenticate/AuthenticateUserUseCase
+    arguments:
+      [
+        "@Contexts.auth.domain.AuthRepository",
+        "@Contexts.shared.infrastructure.security.PasswordEncryptor",
+      ]
+
+  Contexts.auth.application.AuthenticateUserCommandHandler:
+    class: ../../../contexts/auth/application/authenticate/AuthenticateUserCommandHandler
+    arguments: ["@Contexts.auth.application.AuthenticateUserUseCase"]
+    tags:
+      - { name: commandHandler }
+
+  Apps.auth.controllers.LoginUserCtrl:
+    class: ../controllers/LoginUserCtrl
+    arguments: ["@Contexts.shared.infrastructure.CommandBus"]
+
+  #### CommandBus:
+
+  Contexts.shared.infrastructure.CommandBus:
+    class: ../../../contexts/shared/infrastructure/CommandBus/CommandBus
+    arguments: ["!tagged commandHandler"]

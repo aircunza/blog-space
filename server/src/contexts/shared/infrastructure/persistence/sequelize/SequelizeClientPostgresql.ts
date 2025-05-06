@@ -6,7 +6,7 @@ import { initUserModel } from "../../../../users/infrastructure/persistence/sequ
 
 dotenv.config();
 
-export const sequelize = new Sequelize(
+export const sequelizeConnection = new Sequelize(
   process.env.DB_NAME as string,
   process.env.DB_USER as string,
   process.env.DB_PASSWORD as string,
@@ -18,12 +18,12 @@ export const sequelize = new Sequelize(
   }
 );
 
-initUserModel(sequelize);
-initAuthUserModel(sequelize);
+initUserModel(sequelizeConnection);
+initAuthUserModel(sequelizeConnection);
 
 export async function connectionDb() {
   try {
-    await sequelize.authenticate();
+    await sequelizeConnection.authenticate();
     console.log("Database connection successfully.");
   } catch (error) {
     console.error("Unable to connect to the database:", error);

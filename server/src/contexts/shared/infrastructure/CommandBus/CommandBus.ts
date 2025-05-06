@@ -33,6 +33,6 @@ export class CommandBus implements ICommandBus {
     if (!handler) {
       throw new CommandNotRegisteredError(command);
     }
-    await handler?.handle(command);
+    return await handler?.handle(command);
   }
 }

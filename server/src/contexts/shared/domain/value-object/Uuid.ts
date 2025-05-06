@@ -22,4 +22,7 @@ export class Uuid extends StringValueObject {
   getValue(): string {
     return this.value;
   }
+  toString(): string {
+    return this.value;
+  }
 }
