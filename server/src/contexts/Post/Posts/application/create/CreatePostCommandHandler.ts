@@ -2,13 +2,11 @@ import { AuthorId } from "../../domain/value-object/AuthorId";
 import { PostContent } from "../../domain/value-object/PostContent";
 import { PostId } from "../../domain/value-object/PostId";
 import { PostTitle } from "../../domain/value-object/PostTitle";
-import { ICommandHandler } from "../../../shared/domain/command/ICommandHandler";
+import { ICommandHandler } from "../../../../shared/domain/command/ICommandHandler";
 import { CreatePostCommand } from "./CreatePostCommand";
 import { PostCreator } from "./PostCreator";
 
-export class CreatePostCommandHandler
-  implements ICommandHandler<CreatePostCommand>
-{
+export class CreatePostCommandHandler implements ICommandHandler<CreatePostCommand> {
   constructor(private readonly postCreator: PostCreator) {}
   subscribedTo() {
     return CreatePostCommand;

@@ -1,4 +1,4 @@
-import { Command } from "../../../shared/domain/command/Command";
+import { Command } from "../../../../shared/domain/command/Command";
 
 interface params {
   id: string;

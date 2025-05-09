@@ -3,16 +3,17 @@ import { Sequelize } from "sequelize";
 
 import { initAuthUserModel } from "../../../../auth/infrastructure/persistence/sequelize/models/AuthUserModel";
 import { initUserModel } from "../../../../users/infrastructure/persistence/sequelize/models/UserModel";
+import { configApps } from "../../../../../../config";
 
 dotenv.config();
 
 export const sequelizeConnection = new Sequelize(
-  process.env.DB_NAME as string,
-  process.env.DB_USER as string,
-  process.env.DB_PASSWORD as string,
+  configApps.dbName as string,
+  configApps.dbUser as string,
+  configApps.dbPassword as string,
   {
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
+    host: configApps.dbHost,
+    port: Number(configApps.dbPort),
     dialect: "postgres",
     logging: false,
   }

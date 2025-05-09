@@ -1,14 +1,14 @@
 services:
   Contexts.posts.domain.PostsRepository:
-    class: ../../../contexts/posts/infrastructure/persistence/sequelize/repository/PostPostgresqlRepository
+    class: ../../../contexts/Post/Posts/infrastructure/persistence/sequelize/repository/PostPostgresqlRepository
 
   #### create:
   Contexts.posts.application.create.PostCreator:
-    class: ../../../contexts/posts/application/create/PostCreator
+    class: ../../../contexts/Post/Posts/application/create/PostCreator
     arguments: ["@Contexts.posts.domain.PostsRepository"]
 
   Contexts.posts.application.create.CreatePostCommandHandler:
-    class: ../../../contexts/posts/application/create/CreatePostCommandHandler
+    class: ../../../contexts/Post/Posts/application/create/CreatePostCommandHandler
     arguments: ["@Contexts.posts.application.create.PostCreator"]
     tags:
       - { name: commandHandler }

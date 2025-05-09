@@ -18,11 +18,13 @@ const urlClients = Object.keys(process.env)
   .map((key) => process.env[key] as string);
 
 export const configApps = {
+  dbName: process.env.DB_NAME || "dbName",
+  dbUser: process.env.DB_USER || "dbUser",
+  dbPassword: process.env.DB_PASSWORD || "dbPassword",
+  dbHost: process.env.DB_HOST || "localhost",
+  dbPort: process.env.DB_PORT || "5432",
   port: process.env.PORT_API || "3000",
   jwtSecret: process.env.JWT_SECRET || "secret",
-  urlClients:
-    urlClients.length > 0
-      ? urlClients
-      : ["http://localhost:5173", "http://localhost:4173"],
+  urlClients: urlClients.length > 0 ? urlClients : ["http://localhost:5173", "http://localhost:4173"],
   apiVersionedPath: process.env.API_VERSIONED_PATH || "/api/v1",
 };

@@ -1,4 +1,4 @@
-import { configApps } from "./config";
+import { configApps } from "../../config";
 import { Server } from "./server";
 
 export class AppBackend {

@@ -1,6 +1,6 @@
 import { Model } from "sequelize";
 
-import { sequelizeConnection } from "../../../../../shared/infrastructure/persistence/sequelize/SequelizeClientPostgresql";
+import { sequelizeConnection } from "../../../../../../shared/infrastructure/persistence/sequelize/SequelizeClientPostgresql";
 
 export class PostModel extends Model {}
 

@@ -1,5 +1,5 @@
-import { InvalidArgumentError } from "../../../shared/domain/value-object/InvalidArgumentError";
-import { StringValueObject } from "../../../shared/domain/value-object/StringValueObject";
+import { InvalidArgumentError } from "../../../../shared/domain/value-object/InvalidArgumentError";
+import { StringValueObject } from "../../../../shared/domain/value-object/StringValueObject";
 
 export class PostTitle extends StringValueObject {
   constructor(value: string) {
@@ -8,9 +8,7 @@ export class PostTitle extends StringValueObject {
   }
   private ensureIsValidTitle(value: string): void {
     if (value.length < 3 || value.length > 100) {
-      throw new InvalidArgumentError(
-        `<${this.constructor.name}> does not allow the value <${value}>`
-      );
+      throw new InvalidArgumentError(`<${this.constructor.name}> does not allow the value <${value}>`);
     }
   }
 }
