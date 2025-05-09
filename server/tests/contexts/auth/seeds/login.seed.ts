@@ -66,8 +66,13 @@ export async function seedInsertUsers() {
 }
 
 export async function seedDeleteUsers() {
-  await User.destroy({
-    where: {},
-    truncate: true,
-  });
+  try {
+    await User.destroy({
+      where: {},
+      truncate: true,
+      cascade: true, // ⚠️
+    });
+  } catch (e) {
+    console.error(e);
+  }
 }

@@ -15,6 +15,7 @@ import { DomainError } from "../contexts/shared/domain/value-object/DomainError"
 import { connectionDb } from "../contexts/shared/infrastructure/persistence/sequelize/SequelizeClientPostgresql";
 import { registerRoutes as registerAuth } from "./auth/routes";
 import { configApps } from "./config";
+import { registerRoutes as registerRoutesPosts } from "./posts/routes";
 import { setupSocket } from "./socketServer";
 import { registerRoutes as registerUsers } from "./users/routes/";
 
@@ -47,6 +48,7 @@ export class Server {
 
     registerUsers(router);
     registerAuth(router);
+    registerRoutesPosts(router);
 
     //Documentation:
     const file = fs.readFileSync("./documentation.yaml", "utf8");

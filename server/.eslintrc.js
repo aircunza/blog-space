@@ -39,7 +39,7 @@ module.exports = {
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-empty-interface": "off",
     // good practices
-    camelcase: "error",
+    camelcase: "off",
     eqeqeq: "error",
     //"new-cap": "error",
     "no-array-constructor": "error",
