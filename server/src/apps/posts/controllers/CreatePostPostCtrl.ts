@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 
-import { CreatePostCommand } from "../../../contexts/Post/Posts/application/create/CreatePostCommand";
-import { CommandBus } from "../../../contexts/shared/infrastructure/CommandBus/CommandBus";
+import { CreatePostCommand } from "../../../contexts/Posts/Posts/application/create/CreatePostCommand";
+import { InMemoryCommandBus } from "../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus";
 
 export class CreatePostPostCtrl {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: InMemoryCommandBus) {}
   public run = async (
     req: Request,
     res: Response,

@@ -1,14 +1,18 @@
 services:
   Contexts.posts.domain.PostsRepository:
-    class: ../../../contexts/Post/Posts/infrastructure/persistence/sequelize/repository/PostPostgresqlRepository
+    class: ../../../contexts/Posts/Posts/infrastructure/persistence/sequelize/repository/PostPostgresqlRepository
 
   #### create:
   Contexts.posts.application.create.PostCreator:
-    class: ../../../contexts/Post/Posts/application/create/PostCreator
-    arguments: ["@Contexts.posts.domain.PostsRepository"]
+    class: ../../../contexts/Posts/Posts/application/create/PostCreator
+    arguments:
+      [
+        "@Contexts.posts.domain.PostsRepository",
+        "@Contexts.shared.infrastructure.EventBus",
+      ]
 
   Contexts.posts.application.create.CreatePostCommandHandler:
-    class: ../../../contexts/Post/Posts/application/create/CreatePostCommandHandler
+    class: ../../../contexts/Posts/Posts/application/create/CreatePostCommandHandler
     arguments: ["@Contexts.posts.application.create.PostCreator"]
     tags:
       - { name: commandHandler }
@@ -17,8 +21,32 @@ services:
     class: ../controllers/CreatePostPostCtrl
     arguments: ["@Contexts.shared.infrastructure.CommandBus"]
 
+  ## Increment amount of posts use case:
+  Contexts.Posts/PostsCounter.application.increment.IncrementPostsCounterOnPostCreated:
+    class: ../../../contexts/Posts/PostsCounter/application/increment/IncrementPostsCounterOnPostCreated
+    arguments:
+      [
+        "@Contexts.Posts/PostsCounter.application.increment.PostsCounterIncrementer",
+      ]
+    tags:
+      - { name: domainEventSubscriber }
+
+  ## Incrementer:
+  Contexts.Posts/PostsCounter.application.increment.PostsCounterIncrementer:
+    class: ../../../contexts/Posts/PostsCounter/application/increment/PostsCounterIncrementer
+
+  ## EventSubscribers:
+  Contexts.posts.application.create.DomainEventSubscribers:
+    class: ../../../contexts/shared/infrastructure/EventBus/DomainEventSubscribers
+    arguments: ["!tagged domainEventSubscriber"]
+
   #### CommandBus:
 
   Contexts.shared.infrastructure.CommandBus:
-    class: ../../../contexts/shared/infrastructure/CommandBus/CommandBus
+    class: ../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus
     arguments: ["!tagged commandHandler"]
+
+  #### EventBus:
+
+  Contexts.shared.infrastructure.EventBus:
+    class: ../../../contexts/shared/infrastructure/EventBus/InMemory/InMemoryAsyncEventBus

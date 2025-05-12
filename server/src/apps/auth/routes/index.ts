@@ -1,7 +1,7 @@
 import { Router } from "express";
 import fs from "fs";
 
-import { configApps } from "../../../../config";
+import { configApps } from "../../../config";
 
 export function registerRoutes(router: Router) {
   const files = fs.readdirSync(__dirname);

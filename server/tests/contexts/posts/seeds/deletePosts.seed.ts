@@ -1,4 +1,4 @@
-import { PostModel } from "../../../../src/contexts/posts/infrastructure/persistence/sequelize/models/PostModel";
+import { PostModel } from "../../../../src/contexts/Posts/Posts/infrastructure/persistence/sequelize/models/PostModel";
 
 export async function deletePostsSeed() {
   try {

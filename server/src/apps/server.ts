@@ -11,10 +11,10 @@ import { Server as SocketIOServer } from "socket.io";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yaml";
 
+import { configApps } from "../config";
 import { DomainError } from "../contexts/shared/domain/value-object/DomainError";
 import { connectionDb } from "../contexts/shared/infrastructure/persistence/sequelize/SequelizeClientPostgresql";
 import { registerRoutes as registerAuth } from "./auth/routes";
-import { configApps } from "../../config";
 import { registerRoutes as registerRoutesPosts } from "./posts/routes";
 import { setupSocket } from "./socketServer";
 import { registerRoutes as registerUsers } from "./users/routes/";
@@ -69,14 +69,18 @@ export class Server {
     );
 
     // Error handling middleware for production
-    router.use((error: DomainError, req: Request, res: Response, next: NextFunction) => {
-      //const errorFound = errorsList.find((e) => e.error === error.message);
-      if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "test") {
-        console.error(error);
+    router.use(
+      (error: DomainError, req: Request, res: Response, next: NextFunction) => {
+        //const errorFound = errorsList.find((e) => e.error === error.message);
+        if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "test") {
+          console.error(error);
+        }
+        res
+          .status(error.statusCode ?? 500)
+          .json(error.clientMessage ?? "Internal server error");
+        next();
       }
-      res.status(error.statusCode ?? 500).json(error.clientMessage ?? "Internal server error");
-      next();
-    });
+    );
   }
 
   async listen() {

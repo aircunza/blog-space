@@ -1,5 +1,5 @@
-import { Command } from "./Command";
+import { Command, CommandClass } from "./Command";
 
 export interface ICommandBus {
-  dispatch(command: Command): Promise<void>;
+  dispatch<T extends Command>(command: CommandClass<T>): Promise<void>;
 }

@@ -11,7 +11,7 @@
     "types": ["jest"],
   },
   "include": [
-    "src/**/*.ts", "config.ts",                  // Include all .ts files in the src directory
+    "src/**/*.ts", "src/config.ts",                  // Include all .ts files in the src directory
   ],
   "exclude": [
     "node_modules",

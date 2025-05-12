@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, test } from "@jest/globals";
 import request from "supertest";
 
 import { AppBackend } from "../../../../src/apps/app";
-import { configApps } from "../../../../src/apps/config";
+import { configApps } from "../../../../src/config";
 import { seedDeleteUsers } from "../seeds/login.seed";
 
 const app = new AppBackend();

@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 
 import { AuthenticateUserCommand } from "../../../contexts/auth/application/authenticate/AuthenticateUserCommand";
-import { CommandBus } from "./../../../contexts/shared/infrastructure/CommandBus/CommandBus";
+import { InMemoryCommandBus } from "../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus";
 
 export class LoginUserCtrl {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: InMemoryCommandBus) {}
 
   async run(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body;

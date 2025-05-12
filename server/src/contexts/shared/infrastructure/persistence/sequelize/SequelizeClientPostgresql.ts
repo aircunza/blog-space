@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 
+import { configApps } from "../../../../../config";
 import { initAuthUserModel } from "../../../../auth/infrastructure/persistence/sequelize/models/AuthUserModel";
 import { initUserModel } from "../../../../users/infrastructure/persistence/sequelize/models/UserModel";
-import { configApps } from "../../../../../../config";
 
 dotenv.config();
 

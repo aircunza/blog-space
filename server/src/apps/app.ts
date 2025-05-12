@@ -1,4 +1,7 @@
-import { configApps } from "../../config";
+import { configApps } from "../config";
+import { IEventBus } from "../contexts/shared/domain/event/IEventBus";
+import { DomainEventSubscribers } from "../contexts/shared/infrastructure/EventBus/DomainEventSubscribers";
+import { container } from "./posts/dependency-injection";
 import { Server } from "./server";
 
 export class AppBackend {
@@ -14,6 +17,7 @@ export class AppBackend {
 
   async start() {
     this.server = new Server(configApps.port, this.addSocketIo);
+    await this.configureEventBus();
     return this.server.listen();
   }
 
@@ -27,5 +31,17 @@ export class AppBackend {
 
   get appServer() {
     return this.server?.getApp();
+  }
+
+  private async configureEventBus() {
+    const eventBus = container.get<IEventBus>(
+      "Contexts.shared.infrastructure.EventBus"
+    );
+    const domainEventSubscribers = container.get<DomainEventSubscribers>(
+      "Contexts.posts.application.create.DomainEventSubscribers"
+    );
+    console.log("------subscribers -------");
+    console.log(domainEventSubscribers.items);
+    eventBus.addSubscribers(domainEventSubscribers.items);
   }
 }

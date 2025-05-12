@@ -3,7 +3,7 @@ import { ICommandBus } from "../../domain/command/ICommandBus";
 import { ICommandHandler } from "../../domain/command/ICommandHandler";
 import { CommandNotRegisteredError } from "../../domain/value-object/CommandNotRegisteredError";
 
-export class CommandBus implements ICommandBus {
+export class InMemoryCommandBus implements ICommandBus {
   private handlers = new Map<Command, ICommandHandler<Command>>();
 
   constructor(commandsHandler: Array<ICommandHandler<Command>>) {

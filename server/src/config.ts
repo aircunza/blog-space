@@ -25,6 +25,9 @@ export const configApps = {
   dbPort: process.env.DB_PORT || "5432",
   port: process.env.PORT_API || "3000",
   jwtSecret: process.env.JWT_SECRET || "secret",
-  urlClients: urlClients.length > 0 ? urlClients : ["http://localhost:5173", "http://localhost:4173"],
+  urlClients:
+    urlClients.length > 0
+      ? urlClients
+      : ["http://localhost:5173", "http://localhost:4173"],
   apiVersionedPath: process.env.API_VERSIONED_PATH || "/api/v1",
 };

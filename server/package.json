@@ -30,8 +30,10 @@
     "db:create:users": "sequelize-cli db:create --config ./src/contexts/shared/infrastructure/persistence/sequelize/sequelize-cli-config.js",
     "migrate:users": "sequelize-cli db:migrate --migrations-path ./src/contexts/auth/infrastructure/persistence/sequelize/migrations --config ./src/contexts/shared/infrastructure/persistence/sequelize/sequelize-cli-config.js",
     "undo:users": "sequelize-cli db:migrate:undo --migrations-path ./src/contexts/auth/infrastructure/persistence/sequelize/migrations --config ./src/contexts/shared/infrastructure/persistence/sequelize/sequelize-cli-config.js",
-    "undo:all:users": "sequelize-cli db:migrate:undo:all --migrations-path ./src/contexts/auth/infrastructure/persistence/sequelize/migrations --config ./src/contexts/shared/infrastructure/persistence/sequelize/sequelize-cli-config.js"
-  
+    "undo:all:users": "sequelize-cli db:migrate:undo:all --migrations-path ./src/contexts/auth/infrastructure/persistence/sequelize/migrations --config ./src/contexts/shared/infrastructure/persistence/sequelize/sequelize-cli-config.js",
+    "migrate:posts": "sequelize-cli db:migrate --migrations-path ./src/contexts/Posts/Posts/infrastructure/persistence/sequelize/migrations --config ./src/contexts/shared/infrastructure/persistence/sequelize/sequelize-cli-config.js"
+    
+    
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

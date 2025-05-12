@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 
 import { SignupUserCommand } from "../../../contexts/auth/application/signup/SignupUserCommand";
-import { CommandBus } from "../../../contexts/shared/infrastructure/CommandBus/CommandBus";
+import { InMemoryCommandBus } from "../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus";
 
 export class SignupUserCtrl {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: InMemoryCommandBus) {}
 
   async signup(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

@@ -13,7 +13,7 @@ services:
       - { name: commandHandler }
 
   Contexts.shared.infrastructure.CommandBus:
-    class: ../../../contexts/shared/infrastructure/CommandBus/CommandBus
+    class: ../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus
     arguments: ["!tagged commandHandler"]
 
   Apps.users.controllers.UserController:

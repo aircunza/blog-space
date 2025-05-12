@@ -1,3 +1,4 @@
+import { IEventBus } from "../../../../shared/domain/event/IEventBus";
 import { Post } from "../../domain/entity/Post";
 import { IPostRepository } from "../../domain/repository/IPostRepository";
 import { AuthorId } from "../../domain/value-object/AuthorId";
@@ -6,7 +7,10 @@ import { PostId } from "../../domain/value-object/PostId";
 import { PostTitle } from "../../domain/value-object/PostTitle";
 
 export class PostCreator {
-  constructor(private readonly postRepository: IPostRepository) {}
+  constructor(
+    private readonly postRepository: IPostRepository,
+    private readonly eventBus: IEventBus
+  ) {}
   async run(params: {
     id: PostId;
     title: PostTitle;
@@ -20,5 +24,6 @@ export class PostCreator {
       params.authorId
     );
     await this.postRepository.save(post);
+    await this.eventBus.publish(post.pullDomainEvents());
   }
 }

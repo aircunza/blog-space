@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-import { configApps } from "../../../../config";
+import { configApps } from "../../../config";
 import { ITokenHandler, JWTPayload } from "./ITokenHandler";
 
 const privateKey = configApps.jwtSecret;

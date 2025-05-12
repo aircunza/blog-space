@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 
-import { CommandBus } from "../../../contexts/shared/infrastructure/CommandBus/CommandBus";
+import { InMemoryCommandBus } from "../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus";
 import { CreateUserCommand } from "../../../contexts/users/application/create/CreateUserCommand";
 
 export class UserController {
-  constructor(private commandBus: CommandBus) {}
+  constructor(private commandBus: InMemoryCommandBus) {}
 
   public run = async (req: Request, res: Response): Promise<void> => {
     try {

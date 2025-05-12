@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, test } from "@jest/globals";
 import request from "supertest";
 
-import { configApps } from "../../../../src/apps/config";
+import { configApps } from "../../../../src/config";
 import { seedDeleteUsers } from "../../auth/seeds/login.seed";
 import { deletePostsSeed } from "../seeds/deletePosts.seed";
 import { AppBackend } from "./../../../../src/apps/app";
