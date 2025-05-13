@@ -1,6 +1,7 @@
 import { DomainEventClass } from "../../../../shared/domain/event/DomainEvent";
 import { IDomainEventSubscriber } from "../../../../shared/domain/event/IDomainEventSubscriber";
 import { PostCreatedDomainEvent } from "../../../Posts/domain/events/PostCreatedDomainEvent";
+import { PostId } from "../../../Posts/domain/value-object/PostId";
 import { PostsCounterIncrementer } from "./PostsCounterIncrementer";
 
 export class IncrementPostsCounterOnPostCreated
@@ -13,7 +14,6 @@ export class IncrementPostsCounterOnPostCreated
   }
 
   async handle(domainEvent: PostCreatedDomainEvent) {
-    // TODO: implement what insert to run.
-    await this.incrementer.run("new PostId(domainEvent.aggregateId");
+    await this.incrementer.increment(new PostId(domainEvent.aggregateId));
   }
 }

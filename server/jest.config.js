@@ -18,6 +18,7 @@ module.exports = {
           "@src/*": ["src/*"], // You can configure path aliases if needed
           "@test/*": ["test/*"], // You can configure path aliases if needed
         },
+        types: ["jest"],
       },
     },
   },
