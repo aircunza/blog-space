@@ -1,13 +1,14 @@
 import { PostId } from "../../../Posts/domain/value-object/PostId";
+import { IPostsCounterRepository } from "../../domain/IPostsCounterRepository";
 import { PostsCounter } from "../../domain/PostsCounter";
-import { PostsCounterRepository } from "../../domain/PostsCounterRepository";
 
 export class PostsCounterIncrementer {
-  constructor(private repository: PostsCounterRepository) {}
+  constructor(private repository: IPostsCounterRepository) {}
 
-  async increment(postId: PostId): Promise<void> {
+  async increment(postId: PostId, authorId: string): Promise<void> {
     const counter =
-      (await this.repository.search()) ?? PostsCounter.initialize();
+      (await this.repository.search(authorId)) ??
+      PostsCounter.initialize(authorId);
 
     if (counter.hasIncremented(postId)) return;
 

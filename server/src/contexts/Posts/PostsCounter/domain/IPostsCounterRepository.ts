@@ -1,6 +1,6 @@
 import { PostsCounter } from "./PostsCounter";
 
-export interface PostsCounterRepository {
+export interface IPostsCounterRepository {
   save: (postsCounter: PostsCounter) => Promise<void>;
-  search: () => Promise<PostsCounter | null>;
+  search: (authorId: string) => Promise<PostsCounter | null>;
 }

@@ -2,11 +2,11 @@ import { beforeEach, describe, expect, test } from "@jest/globals";
 
 import { PostId } from "../../../../src/contexts/Posts/Posts/domain/value-object/PostId";
 import { PostsCounterIncrementer } from "../../../../src/contexts/Posts/PostsCounter/application/increment/PostsCounterIncrementer";
+import { IPostsCounterRepository } from "../../../../src/contexts/Posts/PostsCounter/domain/IPostsCounterRepository";
 import { PostsCounter } from "../../../../src/contexts/Posts/PostsCounter/domain/PostsCounter";
-import { PostsCounterRepository } from "../../../../src/contexts/Posts/PostsCounter/domain/PostsCounterRepository";
 
 describe("PostsCounterIncrementer", () => {
-  let repository: jest.Mocked<PostsCounterRepository>;
+  let repository: jest.Mocked<IPostsCounterRepository>;
   let incrementer: PostsCounterIncrementer;
 
   // Before each test, we set up the repository mock and the incrementer

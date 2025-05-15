@@ -3,14 +3,20 @@ import { PostId } from "../../Posts/domain/value-object/PostId";
 export class PostsCounter {
   private total: number;
   private existingPosts: Set<string>; // Set to avoid duplicates easily
+  private readonly authorId: string;
 
-  constructor(total = 0, existingPosts: Set<string> = new Set()) {
+  constructor(
+    total = 0,
+    existingPosts: Set<string> = new Set(),
+    authorId: string
+  ) {
     this.total = total;
     this.existingPosts = existingPosts;
+    this.authorId = authorId;
   }
 
-  static initialize(): PostsCounter {
-    return new PostsCounter(0, new Set());
+  static initialize(authorId: string): PostsCounter {
+    return new PostsCounter(0, new Set(), authorId);
   }
 
   increment(postId: PostId): void {
@@ -26,6 +32,10 @@ export class PostsCounter {
     return this.total;
   }
 
+  getAuthorId(): string {
+    return this.authorId;
+  }
+
   toPrimitives(): { total: number; existingPosts: string[] } {
     return {
       total: this.total,
@@ -36,7 +46,12 @@ export class PostsCounter {
   static fromPrimitives(data: {
     total: number;
     existingPosts: string[];
+    authorId: string;
   }): PostsCounter {
-    return new PostsCounter(data.total, new Set(data.existingPosts));
+    return new PostsCounter(
+      data.total,
+      new Set(data.existingPosts),
+      data.authorId
+    );
   }
 }

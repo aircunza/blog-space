@@ -34,6 +34,11 @@ export const initAuthUserModel = (sequelize: Sequelize) => {
         allowNull: false,
         defaultValue: "user",
       },
+      posts_count: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
     },
     {
       sequelize,

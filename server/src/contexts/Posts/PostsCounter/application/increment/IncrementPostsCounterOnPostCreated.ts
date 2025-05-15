@@ -14,6 +14,8 @@ export class IncrementPostsCounterOnPostCreated
   }
 
   async handle(domainEvent: PostCreatedDomainEvent) {
-    await this.incrementer.increment(new PostId(domainEvent.aggregateId));
+    const postId = new PostId(domainEvent.aggregateId);
+    const authorId = domainEvent.authorId;
+    await this.incrementer.increment(postId, authorId);
   }
 }

@@ -28,6 +28,11 @@ module.exports = {
         allowNull: false,
         defaultValue: "user",
       },
+      posts_count: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
