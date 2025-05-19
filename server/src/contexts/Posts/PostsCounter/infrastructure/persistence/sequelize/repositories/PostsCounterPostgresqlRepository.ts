@@ -8,13 +8,14 @@ export class PostsCounterPostgresqlRepository
 {
   async save(counter: PostsCounter) {
     await PostsCounterModel.update(
-      { post_count: counter.getTotal() },
+      { posts_count: counter.getTotal() },
       { where: { id: counter.getAuthorId() } }
     );
   }
   async search(authorId: string) {
-    const user = await PostUserModel.findByPk(authorId);
+    const user = await PostUserModel.findByPk(authorId, { raw: true });
+
     if (!user) return null;
-    return new PostsCounter(user.post_count || 0, new Set(), user.id);
+    return new PostsCounter(user.posts_count || 0, new Set(), user.id);
   }
 }

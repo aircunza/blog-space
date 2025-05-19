@@ -31,9 +31,14 @@ services:
     tags:
       - { name: domainEventSubscriber }
 
+  # Post counter increment repository:
+  Contexts.posts.PostsCounter.domain.Repository:
+    class: ../../../contexts/Posts/PostsCounter/infrastructure/persistence/sequelize/repositories/PostsCounterPostgresqlRepository
+
   ## Incrementer:
   Contexts.Posts/PostsCounter.application.increment.PostsCounterIncrementer:
     class: ../../../contexts/Posts/PostsCounter/application/increment/PostsCounterIncrementer
+    arguments: ["@Contexts.posts.PostsCounter.domain.Repository"]
 
   ## EventSubscribers:
   Contexts.posts.application.create.DomainEventSubscribers:

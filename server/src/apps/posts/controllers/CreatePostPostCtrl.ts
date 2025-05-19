@@ -18,7 +18,6 @@ export class CreatePostPostCtrl {
 
       res.status(201).json({ message: "Post created successfully" });
     } catch (err) {
-      console.log(err);
       next(err);
     }
   };

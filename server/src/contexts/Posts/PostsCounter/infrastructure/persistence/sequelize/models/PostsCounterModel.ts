@@ -1,11 +1,17 @@
 import { DataTypes, Model } from "sequelize";
-import { sequelizeConnection } from "src/contexts/shared/infrastructure/persistence/sequelize/SequelizeClientPostgresql";
+
+import { sequelizeConnection } from "../../../../../../../contexts/shared/infrastructure/persistence/sequelize/SequelizeClientPostgresql";
 
 export class PostsCounterModel extends Model {}
 
 PostsCounterModel.init(
   {
-    post_count: {
+    id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      primaryKey: true,
+    },
+    posts_count: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

@@ -10,7 +10,7 @@
     "types": ["jest"],                                  /* Includes Jest types for testing */
     "moduleResolution": "node",                         /* Uses Node.js module resolution strategy */
     "resolveJsonModule": true,                          /* Allows importing JSON files */
-    "baseUrl": "./"                                     /* Base directory for module resolution */
+    //"baseUrl": "./"                                     /* Base directory for module resolution */
   },
   "include": [
     "src/**/*.ts",                                      /* Includes all .ts files inside src */

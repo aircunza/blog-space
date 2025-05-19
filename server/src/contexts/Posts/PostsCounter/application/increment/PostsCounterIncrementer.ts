@@ -9,7 +9,6 @@ export class PostsCounterIncrementer {
     const counter =
       (await this.repository.search(authorId)) ??
       PostsCounter.initialize(authorId);
-
     if (counter.hasIncremented(postId)) return;
 
     counter.increment(postId);

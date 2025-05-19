@@ -72,7 +72,7 @@ export class Server {
     router.use(
       (error: DomainError, req: Request, res: Response, next: NextFunction) => {
         //const errorFound = errorsList.find((e) => e.error === error.message);
-        if (process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "test") {
+        if (process.env.NODE_ENV === "dev") {
           console.error(error);
         }
         res

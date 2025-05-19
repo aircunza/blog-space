@@ -1,16 +1,17 @@
 import { DataTypes, Model } from "sequelize";
-import { sequelizeConnection } from "src/contexts/shared/infrastructure/persistence/sequelize/SequelizeClientPostgresql";
+
+import { sequelizeConnection } from "../../../../../../shared/infrastructure/persistence/sequelize/SequelizeClientPostgresql";
 
 export interface PostUserAttributes {
   id: string;
   username: string;
-  post_count: number;
+  posts_count: number;
 }
 
 export class PostUserModel extends Model implements PostUserAttributes {
   public id!: string;
   public username!: string;
-  public post_count!: number;
+  public posts_count!: number;
 }
 
 PostUserModel.init(
