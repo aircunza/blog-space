@@ -1,10 +1,10 @@
-// src/shared/application/QueryBus.ts
-import { QueryHandler } from "./QueryHandler";
+import { IQueryHandler } from "../../domain/query/IQueryHandler";
+import { Query } from "../../domain/query/Query";
 
 export class QueryBus {
-  private handlers: Map<string, QueryHandler<any, any>> = new Map();
+  private handlers: Map<string, IQueryHandler<any, any>> = new Map();
 
-  register<Q, R>(queryName: string, handler: QueryHandler<Q, R>) {
+  register<Q, R>(queryName: string, handler: IQueryHandler<Query, Response>) {
     this.handlers.set(queryName, handler);
   }
 
