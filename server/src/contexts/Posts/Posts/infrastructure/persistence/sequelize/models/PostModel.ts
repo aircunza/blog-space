@@ -1,8 +1,31 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
 
 import { sequelizeConnection } from "../../../../../../shared/infrastructure/persistence/sequelize/SequelizeClientPostgresql";
 
-export class PostModel extends Model {}
+interface PostAttributes {
+  id: string;
+  title: string;
+  content: string;
+  author_id: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+interface PostCreationAttributes
+  extends Optional<PostAttributes, "id" | "createdAt" | "updatedAt"> {}
+
+export class PostModel
+  extends Model<PostAttributes, PostCreationAttributes>
+  implements PostAttributes
+{
+  public id!: string;
+  public title!: string;
+  public content!: string;
+  public author_id!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
 
 PostModel.init(
   {
@@ -23,13 +46,19 @@ PostModel.init(
       type: DataTypes.UUID,
       allowNull: false,
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      field: "created_at",
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      field: "updated_at",
+    },
   },
   {
     sequelize: sequelizeConnection,
-    timestamps: true,
-    createdAt: false,
-    updatedAt: "updated_at",
     tableName: "posts",
     modelName: "Post",
+    timestamps: true,
   }
 );

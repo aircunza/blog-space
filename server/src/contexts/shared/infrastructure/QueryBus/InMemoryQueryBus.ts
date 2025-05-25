@@ -1,10 +1,13 @@
 import { IQueryHandler } from "../../domain/query/IQueryHandler";
 import { Query } from "../../domain/query/Query";
 
-export class QueryBus {
+export class InMemoryQueryBus {
   private handlers: Map<string, IQueryHandler<any, any>> = new Map();
 
-  register<Q, R>(queryName: string, handler: IQueryHandler<Query, Response>) {
+  register<Q extends Query, R>(
+    queryName: string,
+    handler: IQueryHandler<Q, R>
+  ) {
     this.handlers.set(queryName, handler);
   }
 

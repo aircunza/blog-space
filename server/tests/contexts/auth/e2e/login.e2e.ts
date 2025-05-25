@@ -16,8 +16,6 @@ describe(" POST /api/v1/auth/login", function () {
       email: "user@example.com",
       password: "password123",
     });
-    console.log("ddddd0----------------");
-    console.log(res.body);
 
     expect(res.statusCode).toBe(200);
     expect(res.body.id).toBeTruthy();

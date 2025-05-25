@@ -16,10 +16,4 @@ export class FilterOperator {
     }
     return new FilterOperator(value as Operator);
   }
-
-  isPositive(): boolean {
-    return (
-      this.value !== Operator.NOT_EQUAL && this.value !== Operator.NOT_CONTAINS
-    );
-  }
 }

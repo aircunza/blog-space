@@ -10,26 +10,30 @@ export class Post extends AggregateRoot {
   readonly title: PostTitle;
   readonly content: PostContent;
   readonly authorId: AuthorId;
+  readonly createdAt?: Date;
 
   constructor(
     id: PostId,
     title: PostTitle,
     content: PostContent,
-    authorId: AuthorId
+    authorId: AuthorId,
+    createdAt?: Date
   ) {
     super();
     this.id = id;
     this.title = title;
     this.content = content;
     this.authorId = authorId;
+    this.createdAt = createdAt;
   }
+
   static create(
     id: PostId,
     title: PostTitle,
     content: PostContent,
     authorId: AuthorId
   ) {
-    const newPost = new Post(id, title, content, authorId);
+    const newPost = new Post(id, title, content, authorId, new Date());
 
     newPost.record(
       new PostCreatedDomainEvent({
@@ -48,12 +52,14 @@ export class Post extends AggregateRoot {
     title: string;
     content: string;
     authorId: string;
+    createdAt?: string | Date;
   }) {
     return new Post(
       new PostId(params.id),
       new PostTitle(params.title),
       new PostContent(params.content),
-      new AuthorId(params.authorId)
+      new AuthorId(params.authorId),
+      params.createdAt ? new Date(params.createdAt) : undefined
     );
   }
 
@@ -63,6 +69,7 @@ export class Post extends AggregateRoot {
       title: this.title.value,
       content: this.content.value,
       authorId: this.authorId.value,
+      createdAt: this.createdAt?.toISOString(),
     };
   }
 }

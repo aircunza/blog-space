@@ -40,8 +40,6 @@ export class AppBackend {
     const domainEventSubscribers = container.get<DomainEventSubscribers>(
       "Contexts.posts.application.create.DomainEventSubscribers"
     );
-    console.log("------subscribers -------");
-    console.log(domainEventSubscribers.items);
     eventBus.addSubscribers(domainEventSubscribers.items);
   }
 }

@@ -9,7 +9,10 @@ export class Order {
       throw new Error(`Invalid direction: ${direction}`);
     }
   }
-
+  static fromPrimitives(by: string, direction?: string): Order {
+    const safeDirection = direction === "desc" ? "desc" : "asc";
+    return new Order(by, safeDirection);
+  }
   invert(): Order {
     return new Order(this.by, this.direction === "asc" ? "desc" : "asc");
   }

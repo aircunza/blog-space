@@ -22,13 +22,14 @@ describe("PostsCounterIncrementer", () => {
 
   // Test case to ensure the counter is incremented when no previous count exists
   test("should increment the counter when postId has not been counted", async () => {
+    const authorId = "f47ac10b-58cc-4372-a567-0e02b2c3d478"; // Author ID
     const postId = new PostId("f47ac10b-58cc-4372-a567-0e02b2c3d479"); // Create a new PostId instance
 
     // Simulate that no counter exists yet (first-time encounter)
     repository.search.mockResolvedValue(null);
 
     // Perform the increment operation
-    await incrementer.increment(postId);
+    await incrementer.increment(postId, authorId);
 
     // Assert that the search method was called once to check for an existing counter
     expect(repository.search).toHaveBeenCalled();
@@ -46,17 +47,18 @@ describe("PostsCounterIncrementer", () => {
 
   // Test case to ensure the counter is not incremented if the postId was already counted
   test("should not increment the counter if postId was already counted", async () => {
+    const authorId = "f47ac10b-58cc-4372-a567-0e02b2c3d478"; // Author ID
     const postId = new PostId("f47ac10b-58cc-4372-a567-0e02b2c3d479"); // Create a new PostId instance
 
     // Create an existing counter that already has the postId incremented
-    const existingCounter = PostsCounter.initialize();
+    const existingCounter = PostsCounter.initialize(authorId);
     existingCounter.increment(postId); // The postId has already been counted
 
     // Simulate that an existing counter was found for the postId
     repository.search.mockResolvedValue(existingCounter);
 
     // Perform the increment operation again
-    await incrementer.increment(postId);
+    await incrementer.increment(postId, authorId);
 
     // Assert that the search method was called to check for an existing counter
     expect(repository.search).toHaveBeenCalled();
@@ -66,18 +68,19 @@ describe("PostsCounterIncrementer", () => {
 
   // Test case to ensure the counter is incremented if a different postId is provided
   test("should increment the counter when a different postId is provided", async () => {
+    const authorId = "f47ac10b-58cc-4372-a567-0e02b2c3d478"; // Author ID
     const postId1 = new PostId("f47ac10b-58cc-4372-a567-0e02b2c3d479"); // First postId
     const postId2 = new PostId("f47ac10b-58cc-4372-a567-0e02b2c3d480"); // Second postId
 
     // Initialize a counter with the first post already counted
-    const existingCounter = PostsCounter.initialize();
+    const existingCounter = PostsCounter.initialize(authorId);
     existingCounter.increment(postId1); // First post counted
 
     // Simulate the repository returning this existing counter
     repository.search.mockResolvedValue(existingCounter);
 
     // Perform the increment operation with a different postId
-    await incrementer.increment(postId2);
+    await incrementer.increment(postId2, authorId);
 
     // Assert that the repository search method was called
     expect(repository.search).toHaveBeenCalled();
