@@ -1,21 +1,33 @@
+import { IQueryBus } from "../../domain/query/IQueryBus";
 import { IQueryHandler } from "../../domain/query/IQueryHandler";
 import { Query } from "../../domain/query/Query";
+import { Response } from "../../domain/query/Response";
 
-export class InMemoryQueryBus {
-  private handlers: Map<string, IQueryHandler<any, any>> = new Map();
+export class InMemoryQueryBus implements IQueryBus {
+  // Query handlers:
+  private handlers = new Map<Query, IQueryHandler<Query, Response>>();
 
-  register<Q extends Query, R>(
+  constructor(queryHandlers: Array<IQueryHandler<Query, Response>>) {
+    queryHandlers.forEach((handler) => {
+      this.handlers.set(handler.subscribedTo(), handler);
+    });
+  }
+
+  register<Q extends Query>(
     queryName: string,
-    handler: IQueryHandler<Q, R>
+    handler: IQueryHandler<Q, Response>
   ) {
     this.handlers.set(queryName, handler);
   }
 
-  async ask<Q, R>(queryName: string, query: Q): Promise<R> {
-    const handler = this.handlers.get(queryName);
+  // Query bus:
+  async ask<R>(query: Query): Promise<R> {
+    const handler = this.handlers.get(query.constructor);
+
     if (!handler) {
-      throw new Error(`No handler found for query ${queryName}`);
+      throw new Error(`No handler found for query ${query}`);
     }
-    return handler.handle(query);
+
+    return handler.handle(query) as Promise<R>;
   }
 }

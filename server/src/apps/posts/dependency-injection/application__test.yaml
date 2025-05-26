@@ -21,6 +21,22 @@ services:
     class: ../controllers/CreatePostPostCtrl
     arguments: ["@Contexts.shared.infrastructure.CommandBus"]
 
+  #### GET posts by:
+  Contexts.posts.application.findByCriteria.PostsByCriteriaSearcher:
+    class: ../../../contexts/Posts/Posts/application/find/PostsByCriteriaSearcher
+    arguments: ["@Contexts.posts.domain.PostsRepository"]
+
+  Contexts.posts.application.findByCriteria.SearchPostsByCriteriaQueryHandler:
+    class: ../../../contexts/Posts/Posts/application/find/SearchPostsByCriteriaQueryHandler
+    arguments:
+      ["@Contexts.posts.application.findByCriteria.PostsByCriteriaSearcher"]
+    tags:
+      - { name: queryHandler }
+
+  Apps.posts.controllers.PostsGetCtrl:
+    class: ../controllers/PostsGetCtrl
+    arguments: ["@Contexts.shared.infrastructure.QueryBus"]
+
   ## Increment amount of posts use case:
   Contexts.Posts/PostsCounter.application.increment.IncrementPostsCounterOnPostCreated:
     class: ../../../contexts/Posts/PostsCounter/application/increment/IncrementPostsCounterOnPostCreated
@@ -46,12 +62,15 @@ services:
     arguments: ["!tagged domainEventSubscriber"]
 
   #### CommandBus:
-
   Contexts.shared.infrastructure.CommandBus:
     class: ../../../contexts/shared/infrastructure/CommandBus/InMemoryCommandBus
     arguments: ["!tagged commandHandler"]
 
-  #### EventBus:
+  #### QueryBus:
+  Contexts.shared.infrastructure.QueryBus:
+    class: ../../../contexts/shared/infrastructure/QueryBus/InMemoryQueryBus
+    arguments: ["!tagged queryHandler"]
 
+  #### EventBus:
   Contexts.shared.infrastructure.EventBus:
     class: ../../../contexts/shared/infrastructure/EventBus/InMemory/InMemoryAsyncEventBus
