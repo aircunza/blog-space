@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
+import { PostResponse } from "../../../contexts/Posts/Posts/application/find/PostResponse";
 import { SearchPostsByCriteriaQuery } from "../../../contexts/Posts/Posts/application/find/SearchPostsByCriteriaQuery";
 import { Filter } from "../../../contexts/shared/domain/criteria/Filter";
 import { FilterOperator } from "../../../contexts/shared/domain/criteria/FilterOperator";
@@ -32,15 +33,11 @@ export class PostsGetCtrl {
         cursorNumber
       );
 
-      const posts = await this.queryBus.ask<SearchPostsByCriteriaQuery, any>(
-        "SearchPostsByCriteriaQuery",
-        query
-      );
+      const posts = await this.queryBus.ask<PostResponse>(query);
 
       res.status(200).json(posts);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: (error as Error).message });
+      next(error);
     }
   }
 }

@@ -50,6 +50,7 @@ describe("GET /get-posts-by", () => {
 
   test("should return posts with no filters", async () => {
     const res = await request(app.httpServer).get(baseUrl);
+
     expect(res.statusCode).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBeGreaterThan(0);

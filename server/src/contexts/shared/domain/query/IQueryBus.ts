@@ -1,6 +1,6 @@
-import { IResponse } from "./IResponse";
 import { Query } from "./Query";
+import { Response } from "./Response";
 
 export interface IQueryBus {
-  ask<R extends IResponse>(query: Query): Promise<R>;
+  ask<R extends Response>(query: Query): Promise<R>;
 }
