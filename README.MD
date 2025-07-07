@@ -1,4 +1,4 @@
-# 🚀 Space Blog
+# 🚀 Space Blog (in Pogress)
 
 **Space Blog** is a backend blog platform built with **Node.js**, **Express**, **PostgreSQL**, and **Docker**, designed using modern enterprise patterns like **Domain-Driven Design (DDD)**, **CQRS**, and **Domain Events**.
 
